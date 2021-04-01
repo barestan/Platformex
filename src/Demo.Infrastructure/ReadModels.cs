@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Platformex;
+using Platformex.Domain;
 using Platformex.Infrastructure;
 
 namespace Demo.Infrastructure
@@ -7,7 +8,7 @@ namespace Demo.Infrastructure
 
     [EventSubscriber]
     class TotalProjectsReadModel : ReadModel<TotalProjectsReadModel>,
-        IAmReadModelFor<ProjectId, ProjectCreated>
+        IAmSyncReadModelFor<ProjectId, ProjectCreated>
     {
         public int Count { get; private set; }
         public Task Apply(IDomainEvent<ProjectId, ProjectCreated> domainEvent)
@@ -27,18 +28,18 @@ namespace Demo.Infrastructure
     {
         public string Name { get; set; }
         public int Count { get; set; }
-        public Task Apply(IDomainEvent<ProjectId, ProjectCreated> domainEvent)
+        public async Task Apply(IDomainEvent<ProjectId, ProjectCreated> domainEvent)
         {
             Name = domainEvent.AggregateEvent.Name;
             Count++;
-            return Task.CompletedTask;
+            await Task.Delay(2000);
         }
 
-        public Task Apply(IDomainEvent<ProjectId, ProjectRenamed> domainEvent)
+        public async Task Apply(IDomainEvent<ProjectId, ProjectRenamed> domainEvent)
         {
             Name = domainEvent.AggregateEvent.NewName;
             Count++;
-            return Task.CompletedTask;
+            await Task.Delay(2000);
         }
     }
 }

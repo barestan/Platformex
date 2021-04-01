@@ -1,5 +1,4 @@
-﻿using Demo.Domain;
-using Platformex.Infrastructure;
+﻿using Platformex.Infrastructure;
 
 namespace Demo.Infrastructure
 {
@@ -7,7 +6,7 @@ namespace Demo.Infrastructure
     {
         public DemoContext()
         {
-            Register<ProjectId, Project, ProjectState>();
+            Register<ProjectId, Domain.Project, ProjectState>();
         }
     }
 }

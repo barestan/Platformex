@@ -33,7 +33,7 @@ namespace Platformex.Infrastructure
                     mi => mi.GetParameters()[0].ParameterType,
                     mi => ReflectionHelper.CompileMethodInvocation<Action<T, IAggregateEvent>>(type, mi.Name, mi.GetParameters()[0].ParameterType));
         }
-        internal static IReadOnlyList<Tuple<Type, Type>> GetReadModelSubscribersTypes(this Type type)
+        internal static IReadOnlyList<Tuple<Type, Type>> GetReadModelSubscribersTypes(this Type type, bool isSync)
         {
             var interfaces = type
                 .GetTypeInfo()
@@ -41,7 +41,8 @@ namespace Platformex.Infrastructure
                 .Select(i => i.GetTypeInfo())
                 .ToList();
             var types = interfaces
-                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IAmReadModelFor<,>))
+                .Where(i => i.IsGenericType && i.GetGenericTypeDefinition() == 
+                    (isSync ? typeof(IAmSyncReadModelFor<,>) : typeof(IAmReadModelFor<,>)))
                 .Select(i => new Tuple<Type, Type>(i.GetGenericArguments()[0], i.GetGenericArguments()[1]))
                 .ToList();
 

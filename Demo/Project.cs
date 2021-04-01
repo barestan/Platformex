@@ -30,7 +30,7 @@ namespace Demo
     {
         public CreateProjectValidator() {
             RuleFor(x => x.Id).NotEmpty();
-            RuleFor(x => x.Name).Empty().WithMessage("Имя не может быть пустым");
+            RuleFor(x => x.Name).NotEmpty().WithMessage("Имя не может быть пустым");
         }
     }
 

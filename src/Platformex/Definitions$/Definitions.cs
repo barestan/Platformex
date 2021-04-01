@@ -16,18 +16,18 @@ namespace Platformex
 
     public sealed class Definitions
     {
-        private Dictionary<Type, AggregateDefinition>
-            AggregateDefinitions = new Dictionary<Type, AggregateDefinition>();
+        private readonly Dictionary<Type, AggregateDefinition>
+            _aggregateDefinitions = new Dictionary<Type, AggregateDefinition>();
         public AggregateDefinition Aggregate<TIdentity>() where TIdentity : Identity<TIdentity> 
-            => AggregateDefinitions[typeof(TIdentity)];
+            => _aggregateDefinitions[typeof(TIdentity)];
 
         public void Register(AggregateDefinition definition)
         {
-            AggregateDefinitions.Add(definition.IdentityType, definition);
+            _aggregateDefinitions.Add(definition.IdentityType, definition);
         }
 
         public IEnumerable<Assembly> Assemblies =>
-            AggregateDefinitions.Values.SelectMany(i => new []
+            _aggregateDefinitions.Values.SelectMany(i => new []
             {
                 i.AggreagteType.Assembly,
                 i.IdentityType.Assembly,

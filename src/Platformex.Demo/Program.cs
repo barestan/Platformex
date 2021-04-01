@@ -38,7 +38,11 @@ namespace Platformex.Demo
                 .AddSimpleMessageStreamProvider("EventBusProvider")
                 .AddMemoryGrainStorage("PubSubStore")
                 
-                .ConfigureLogging(logging => logging.AddConsole())
+                .ConfigureLogging(logging =>
+                {
+                    logging.AddConsole();
+                    logging.SetMinimumLevel(LogLevel.Information);
+                })
                 
                 .ConfigurePlatformex(p =>
                 {

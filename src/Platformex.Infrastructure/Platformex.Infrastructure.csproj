@@ -19,4 +19,16 @@
       <ProjectReference Include="..\Platformex\Platformex.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Orleans_CodeGenInputs Remove="IReadModel.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Orleans_CodeGenInputs Remove="IAmReadModelFor.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Orleans_CodeGenInputs Remove="AggregateReadModel.cs" />
+    </ItemGroup>
+
 </Project>

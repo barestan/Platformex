@@ -12,7 +12,10 @@ namespace Platformex.Domain
         public TIdentity AggregateIdentity { get; }
         public TAggregateEvent AggregateEvent { get; }
         public Int64 AggregateSequenceNumber { get; }
-        //public IEventMetadata Metadata { get; }
+
+        // ReSharper disable once UnassignedGetOnlyAutoProperty
+        public IEventMetadata Metadata { get; }
+
         public DateTimeOffset Timestamp { get; }
 
         public DomainEvent(
@@ -21,30 +24,20 @@ namespace Platformex.Domain
             DateTimeOffset timestamp,
             Int64 aggregateSequenceNumber)
         {
-            if (aggregateEvent == null) throw new ArgumentNullException(nameof(aggregateEvent));
             if (timestamp == default) throw new ArgumentNullException(nameof(timestamp));
-            if (aggregateIdentity == null || String.IsNullOrEmpty(aggregateIdentity.Value)) throw new ArgumentNullException(nameof(aggregateIdentity));
+            if (aggregateIdentity == null || string.IsNullOrEmpty(aggregateIdentity.Value)) throw new ArgumentNullException(nameof(aggregateIdentity));
             if (aggregateSequenceNumber <= 0) throw new ArgumentOutOfRangeException(nameof(aggregateSequenceNumber));
 
-            AggregateEvent = aggregateEvent;
+            AggregateEvent = aggregateEvent ?? throw new ArgumentNullException(nameof(aggregateEvent));
             Timestamp = timestamp;
             AggregateIdentity = aggregateIdentity;
             AggregateSequenceNumber = aggregateSequenceNumber;
         }
 
-        public IIdentity GetIdentity()
-        {
-            return AggregateIdentity;
-        }
+        public IIdentity GetIdentity() => AggregateIdentity;
 
-        public IAggregateEvent GetAggregateEvent()
-        {
-            return AggregateEvent;
-        }
+        public IAggregateEvent GetAggregateEvent() => AggregateEvent;
 
-        public override String ToString()
-        {
-            return $"{IdentityType} v{AggregateSequenceNumber}/{EventType}:{AggregateIdentity}";
-        }
+        public override string ToString() => $"{IdentityType} v{AggregateSequenceNumber}/{EventType}:{AggregateIdentity}";
     }
 }

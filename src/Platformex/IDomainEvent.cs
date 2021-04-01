@@ -7,7 +7,7 @@ namespace Platformex
         Type IdentityType { get; }
         Type EventType { get; }
         long AggregateSequenceNumber { get; }
-        //IEventMetadata Metadata { get; }
+        IEventMetadata Metadata { get; }
         DateTimeOffset Timestamp { get; }
 
         IIdentity GetIdentity();
