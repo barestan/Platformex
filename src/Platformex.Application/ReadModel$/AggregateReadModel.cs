@@ -1,7 +1,7 @@
 ﻿using System;
 using Orleans;
 
-namespace Platformex.Infrastructure
+namespace Platformex.Application
 {
     public abstract class AggregateReadModel<TIdentity, TReadModel> : ReadModel<TReadModel> 
         where TIdentity : IIdentity

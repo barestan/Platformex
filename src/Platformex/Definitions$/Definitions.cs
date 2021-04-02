@@ -1,14 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
 #region hack
 namespace System.Runtime.CompilerServices
 {
+    [EditorBrowsable(EditorBrowsableState.Never)]
     public class IsExternalInit{}
 }
 #endregion
+
 
 namespace Platformex
 {
@@ -17,9 +20,10 @@ namespace Platformex
     public sealed class Definitions
     {
         private readonly Dictionary<Type, AggregateDefinition>
-            _aggregateDefinitions = new Dictionary<Type, AggregateDefinition>();
+            _aggregateDefinitions = new();
         public AggregateDefinition Aggregate<TIdentity>() where TIdentity : Identity<TIdentity> 
             => _aggregateDefinitions[typeof(TIdentity)];
+        private readonly List<Assembly> _applicationPartsAssemlies = new();
 
         public void Register(AggregateDefinition definition)
         {
@@ -33,7 +37,13 @@ namespace Platformex
                 i.IdentityType.Assembly,
                 i.InterfaceType.Assembly,
                 i.StateType.Assembly
-            }).Distinct();
+            }).Concat(_applicationPartsAssemlies)
+              .Distinct();
 
+        public void RegisterApplicationParts(Assembly contextAppliactionParts)
+        {
+            if (!_applicationPartsAssemlies.Contains(contextAppliactionParts))
+                _applicationPartsAssemlies.Add(contextAppliactionParts);
+        }
     }
 }

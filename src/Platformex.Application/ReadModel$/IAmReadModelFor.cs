@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Platformex.Infrastructure
+namespace Platformex.Application
 {
     public interface IAmReadModelFor<in TIdentity, in TAggregateEvent>
         where TIdentity : Identity<TIdentity>

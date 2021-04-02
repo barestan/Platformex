@@ -1,4 +1,4 @@
-﻿namespace Platformex.Infrastructure
+﻿namespace Platformex.Application
 {
     public interface ICanApply<in TEvent, TIdentity> 
         where TEvent : IAggregateEvent<TIdentity> 

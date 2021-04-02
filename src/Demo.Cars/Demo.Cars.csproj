@@ -1,7 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <RootNamespace>Demo</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -9,10 +11,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <ProjectReference Include="..\Demo.Application\Demo.Application.csproj" />
-      <ProjectReference Include="..\Demo.Cars.Domain\Demo.Cars.Domain.csproj" />
-      <ProjectReference Include="..\Demo.Documents.Domain\Demo.Documents.Domain.csproj" />
-      <ProjectReference Include="..\Platformex.Infrastructure\Platformex.Infrastructure.csproj" />
+      <ProjectReference Include="..\Platformex\Platformex.csproj" />
     </ItemGroup>
 
 </Project>

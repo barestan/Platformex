@@ -74,7 +74,7 @@ namespace Platformex.Domain
                 Logger.LogInformation($"Aggregate [{GetPrettyName()}] fires event {e.GetPrettyName()}...");
 
                 //Посылаем сообщения асинхронно
-                var task = GetStreamProvider("EventBusProvider")
+                var _ = GetStreamProvider("EventBusProvider")
                     .GetStream<IDomainEvent>(Guid.Empty, StreamHelper.EventStreamName(typeof(TEvent),false))
                     .OnNextAsync(domainEvent).ConfigureAwait(false);
 

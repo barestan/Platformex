@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
@@ -15,11 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Platformex.Domain\Platformex.Domain.csproj" />
-      <ProjectReference Include="..\Platformex\Platformex.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
       <Orleans_CodeGenInputs Remove="IReadModel.cs" />
     </ItemGroup>
 
@@ -29,6 +24,10 @@
 
     <ItemGroup>
       <Orleans_CodeGenInputs Remove="AggregateReadModel.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Platformex.Application\Platformex.Application.csproj" />
     </ItemGroup>
 
 </Project>

@@ -10,11 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Demo\Demo.csproj" />
     <ProjectReference Include="..\Demo.Infrastructure\Demo.Infrastructure.csproj" />
-    <ProjectReference Include="..\Platformex.Domain\Platformex.Domain.csproj" />
-    <ProjectReference Include="..\Platformex.Infrastructure\Platformex.Infrastructure.csproj" />
-    <ProjectReference Include="..\Platformex\Platformex.csproj" />
   </ItemGroup>
 
 </Project>

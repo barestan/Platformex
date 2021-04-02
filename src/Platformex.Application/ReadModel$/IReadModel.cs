@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Orleans;
 
-namespace Platformex.Infrastructure
+namespace Platformex.Application
 {
     public interface IReadModel : IGrainWithStringKey
     {

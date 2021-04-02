@@ -9,10 +9,11 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <ProjectReference Include="..\Demo.Application\Demo.Application.csproj" />
-      <ProjectReference Include="..\Demo.Cars.Domain\Demo.Cars.Domain.csproj" />
-      <ProjectReference Include="..\Demo.Documents.Domain\Demo.Documents.Domain.csproj" />
-      <ProjectReference Include="..\Platformex.Infrastructure\Platformex.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Demo.Documents\Demo.Documents.csproj" />
+      <ProjectReference Include="..\Platformex.Domain\Platformex.Domain.csproj" />
     </ItemGroup>
 
 </Project>

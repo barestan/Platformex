@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <RootNamespace>Demo</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -9,8 +11,7 @@
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
-      <ProjectReference Include="..\..\Demo\Demo.csproj" />
-      <ProjectReference Include="..\Platformex.Domain\Platformex.Domain.csproj" />
+      <ProjectReference Include="..\Platformex\Platformex.csproj" />
     </ItemGroup>
 
 </Project>

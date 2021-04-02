@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Platformex.Domain;
 
-namespace Platformex.Infrastructure
+namespace Platformex.Application
 {
     public abstract class AggregateState<TIdentity, TEventApplier> :
         IAggregateState<TIdentity> where TIdentity : Identity<TIdentity>

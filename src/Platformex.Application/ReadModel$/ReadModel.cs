@@ -9,7 +9,7 @@ using Orleans.Concurrency;
 using Orleans.Streams;
 using Platformex.Domain;
 
-namespace Platformex.Infrastructure
+namespace Platformex.Application
 {
     [Reentrant]
     public abstract class ReadModel<TReadModel> : Grain, IReadModel where TReadModel : class, IReadModel
@@ -110,7 +110,7 @@ namespace Platformex.Infrastructure
                 }
                 else
                 {
-                    var task = GrainFactory.GetGrain<IReadModel>(readModelId, GetType().FullName)
+                    var __ = GrainFactory.GetGrain<IReadModel>(readModelId, GetType().FullName)
                         .ProcessEvent(data).ConfigureAwait(false);
                     
                 }
