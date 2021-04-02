@@ -15,7 +15,12 @@ namespace Platformex.Application
             ApplyMethods = typeof(TEventApplier).GetAggregateEventApplyMethods<TIdentity, TEventApplier>();
         }
         public TIdentity Id { get; protected set; }
-        public abstract Task LoadState(TIdentity id);
+
+        public virtual Task LoadState(TIdentity id)
+        {
+            Id = id;
+            return Task.CompletedTask;
+        }
 
         public async Task Apply(IAggregateEvent<TIdentity> e)
         {

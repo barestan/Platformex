@@ -5,12 +5,13 @@ using Platformex.Domain;
 
 namespace Demo.Application.ReadModels
 {
+    //ReadModel - проекция, которая готовит данные для запроса
     [EventSubscriber]
     class TotalObjectsReadModel : ReadModel<TotalObjectsReadModel>,
-        IAmSyncReadModelFor<CarId, CarCreated>,
-        IAmSyncReadModelFor<DocumentId, DocumentCreated>
+        IAmReadModelFor<CarId, CarCreated>,
+        IAmReadModelFor<DocumentId, DocumentCreated>
     {
-        public int Count { get; private set; }
+        public static int Count { get; private set; }
         public Task Apply(IDomainEvent<CarId, CarCreated> domainEvent)
         {
             Count++;
@@ -22,6 +23,31 @@ namespace Demo.Application.ReadModels
         {
             Count++;
             return Task.CompletedTask;
+        }
+    }
+    //Запрос
+    public class TotalObjectsQuery : IQuery<TotalObjectsQueryResult>
+    {
+
+    }
+    //Результат запроса
+    public class TotalObjectsQueryResult
+    {
+        public TotalObjectsQueryResult(int count)
+        {
+            Count = count;
+        }
+
+        public int Count { get; }
+    }
+
+    
+    //Обработчик запроса
+    public class TotalObjectsQueryHandler : QueryHandler<TotalObjectsQuery, TotalObjectsQueryResult>
+    {
+        protected override Task<TotalObjectsQueryResult> ExecuteAsync(TotalObjectsQuery query)
+        {
+            return Task.FromResult(new TotalObjectsQueryResult(TotalObjectsReadModel.Count));
         }
     }
 }

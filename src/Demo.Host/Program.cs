@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using Platformex;
 using Platformex.Infrastructure;
 
 namespace Demo.Host
@@ -31,6 +32,19 @@ namespace Demo.Host
             var doc = await platform.CreateDocument(docId, "doc");
             
             await doc.RenameDocument("doc-new-name");
+
+            var result = await platform.QueryAsync(new TotalObjectsQuery());
+            Console.WriteLine($">> Total count: {result.Count}" );
+
+            var res = await platform.QueryAsync(new ObjectsNamesQuery());
+            Console.WriteLine($">> Names: {string.Join(",", res.Names)}" );
+
+            var items = await platform.QueryAsync(new CarInfoQuery(10));
+            foreach (var c in items)
+            {
+                Console.WriteLine($">> CAR INFO: ID:{c.Id} Name:{c.Name} Changes:{c.ChangesCount}" );
+            }
+
 
             Console.ReadKey();
         }

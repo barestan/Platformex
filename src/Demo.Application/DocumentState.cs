@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Demo.Documents.Domain;
+﻿using Demo.Documents.Domain;
 using Platformex.Application;
 
 namespace Demo.Application
@@ -15,10 +14,5 @@ namespace Demo.Application
         public void Apply(DocumentRenamed e)
             => Name = e.NewName;
 
-        public override Task LoadState(DocumentId id)
-        {
-            Id = id;
-            return Task.CompletedTask;
-        }
     }
 }
