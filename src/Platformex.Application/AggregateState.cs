@@ -31,13 +31,14 @@ namespace Platformex.Application
 
             if (!ApplyMethods.TryGetValue(aggregateEventType, out applier))
             {
-                throw new MissingMethodException($"missing Apply({aggregateEventType.Name})");
+                throw new MissingMethodException($"missing HandleAsync({aggregateEventType.Name})");
             }
 
             applier((TEventApplier) (object) this, e);
             
             await AfterApply(e);
         }
+
 
         protected virtual Task BeforeApply(IAggregateEvent<TIdentity> id) => Task.CompletedTask;
 

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Platformex;
 using Platformex.Domain;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace Demo.Documents.Domain
 {

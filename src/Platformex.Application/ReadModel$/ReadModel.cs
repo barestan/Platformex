@@ -54,7 +54,7 @@ namespace Platformex.Application
 
                     //Асинхронные подписки
                     var asyncSubscriptionTypes =
-                        typeof(TReadModel).GetReadModelSubscribersTypes(false)
+                        typeof(TReadModel).GetSubscribersTypes(false)
                             .Where(i => identytyType == null || identytyType == i.Item1);
 
                     foreach (var subscriptionType in asyncSubscriptionTypes)
@@ -67,7 +67,7 @@ namespace Platformex.Application
 
                     //Синхронные подписки
                     var syncSubscriptionTypes =
-                        typeof(TReadModel).GetReadModelSubscribersTypes(true)
+                        typeof(TReadModel).GetSubscribersTypes(true)
                             .Where(i => identytyType == null || identytyType == i.Item1);
                     
                     foreach (var subscriptionType in syncSubscriptionTypes)
@@ -141,7 +141,7 @@ namespace Platformex.Application
             var method = ApplyMethods.FirstOrDefault(i => i.Key.IsAssignableFrom(eventType)).Value;
 
             if (method == null)
-                throw new NotImplementedException($"ReadModel of Type={GetType()} does not have an 'Apply' method that takes in an aggregate event of Type={eventType} as an argument.");
+                throw new NotImplementedException($"ReadModel of Type={GetType()} does not have an 'HandleAsync' method that takes in an aggregate event of Type={eventType} as an argument.");
 
             var aggregateApplyMethod = method.Bind(this as TReadModel);
 

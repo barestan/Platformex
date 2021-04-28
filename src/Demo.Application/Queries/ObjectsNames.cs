@@ -3,16 +3,16 @@ using System.Threading.Tasks;
 using Platformex;
 using Platformex.Application;
 using Platformex.Domain;
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace Demo.Application.ReadModels
+namespace Demo.Application.Queries
 {
     //Проекция
     [EventSubscriber]
     class ObjectsNamesReadModel : ReadModel<ObjectsNamesReadModel>,
-        IAmReadModelFor<CarId, CarCreated>,
-        IAmReadModelFor<DocumentId, DocumentCreated>,
-        IAmReadModelFor<CarId, CarRenamed>,
-        IAmReadModelFor<DocumentId, DocumentRenamed>
+        ISubscribeTo<DocumentId, DocumentCreated>,
+        ISubscribeTo<DocumentId, DocumentRenamed>
     {
         public static List<string> Names { get; private set; } = new List<string>();
 
@@ -23,16 +23,10 @@ namespace Demo.Application.ReadModels
             if (!Names.Contains(name)) Names.Add(name);
             return Task.CompletedTask;
         }
-        public Task Apply(IDomainEvent<CarId, CarCreated> domainEvent) 
+        public Task HandleAsync(IDomainEvent<DocumentId, DocumentCreated> domainEvent) 
             => AddNewIfNotExits(domainEvent.AggregateEvent.Name);
 
-        public Task Apply(IDomainEvent<DocumentId, DocumentCreated> domainEvent) 
-            => AddNewIfNotExits(domainEvent.AggregateEvent.Name);
-
-        public Task Apply(IDomainEvent<CarId, CarRenamed> domainEvent) 
-            => AddNewIfNotExits(domainEvent.AggregateEvent.NewName);
-
-        public Task Apply(IDomainEvent<DocumentId, DocumentRenamed> domainEvent) 
+        public Task HandleAsync(IDomainEvent<DocumentId, DocumentRenamed> domainEvent) 
             => AddNewIfNotExits(domainEvent.AggregateEvent.NewName);
     }
     //Запрос

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Platformex.Application
+namespace Platformex.Domain
 {
     public static class ReflectionHelper
     {

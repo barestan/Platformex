@@ -2,12 +2,11 @@
 using System.Net;
 using System.Threading.Tasks;
 using Demo.Application;
-using Demo.Application.ReadModels;
+using Demo.Application.Queries;
 using Demo.Cars.Domain;
 using Demo.Documents.Domain;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using Platformex;
@@ -39,17 +38,17 @@ namespace Demo.Host
             var res = await platform.QueryAsync(new ObjectsNamesQuery());
             Console.WriteLine($">> Names: {string.Join(",", res.Names)}" );
 
-            var items = await platform.QueryAsync(new CarInfoQuery(10));
+            var items = await platform.QueryAsync(new DocumentInfoQuery(10));
             foreach (var c in items)
             {
-                Console.WriteLine($">> CAR INFO: ID:{c.Id} Name:{c.Name} Changes:{c.ChangesCount}" );
+                Console.WriteLine($">> DOCUMENT INFO: ID:{c.Id} Name:{c.Name} Changes:{c.ChangesCount}" );
             }
 
 
             Console.ReadKey();
         }
 
-        private static async Task<IClusterClient> CreateHost()
+        private static async Task<IPlatform> CreateHost()
         {
             var builder = new SiloHostBuilder()
                 //Конфигурация кластера
@@ -73,14 +72,14 @@ namespace Demo.Host
                 {
                     p.RegisterAggregate<CarId, CarAggregate, CarState>();
                     p.RegisterAggregate<DocumentId, DocumentAggregate, DocumentState>();
-                    p.RegisterApplicationParts<CarInfoReadModel>();
+                    p.RegisterApplicationParts<DocumentInfoReadModel>();
                 });
 
             //Запуск узла кластера
             var host = builder.Build();
             await host.StartAsync();
 
-            return host.Services.GetService<IClusterClient>();
+            return host.Services.GetService<IPlatform>();
         }
     }
 }

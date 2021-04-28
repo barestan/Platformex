@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Platformex.Application
+namespace Platformex.Domain
 {
     public static class FunctionalBindingExtensions
     {

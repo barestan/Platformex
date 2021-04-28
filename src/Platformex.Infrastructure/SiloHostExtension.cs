@@ -25,7 +25,11 @@ namespace Platformex.Infrastructure
 
             builder.ConfigureServices(collection =>
             {
-                collection.AddSingleton<IPlatform>(platform);
+                collection.AddSingleton<IPlatform>(provider =>
+                {
+                    platform.SetServiceProvider(provider);
+                    return platform;
+                });
             });
 
             builder

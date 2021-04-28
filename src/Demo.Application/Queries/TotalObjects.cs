@@ -2,24 +2,28 @@
 using Platformex;
 using Platformex.Application;
 using Platformex.Domain;
+// ReSharper disable ArrangeTypeModifiers
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace Demo.Application.ReadModels
+
+namespace Demo.Application.Queries
 {
     //ReadModel - проекция, которая готовит данные для запроса
     [EventSubscriber]
     class TotalObjectsReadModel : ReadModel<TotalObjectsReadModel>,
-        IAmReadModelFor<CarId, CarCreated>,
-        IAmReadModelFor<DocumentId, DocumentCreated>
+        ISubscribeTo<CarId, CarCreated>,
+        ISubscribeTo<DocumentId, DocumentCreated>
     {
         public static int Count { get; private set; }
-        public Task Apply(IDomainEvent<CarId, CarCreated> domainEvent)
+        protected override string GetReadModelId(IDomainEvent domainEvent) => "total";
+
+        public Task HandleAsync(IDomainEvent<CarId, CarCreated> domainEvent)
         {
             Count++;
             return Task.CompletedTask;
         }
 
-        protected override string GetReadModelId(IDomainEvent domainEvent) => "total";
-        public Task Apply(IDomainEvent<DocumentId, DocumentCreated> domainEvent)
+        public Task HandleAsync(IDomainEvent<DocumentId, DocumentCreated> domainEvent)
         {
             Count++;
             return Task.CompletedTask;

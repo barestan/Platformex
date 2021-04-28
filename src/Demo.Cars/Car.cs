@@ -1,8 +1,6 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Threading.Tasks;
 using FluentValidation;
-using Orleans;
 using Platformex;
 
 #region hack
@@ -21,13 +19,13 @@ namespace Demo
         public CarId(string value) : base(value) {}
     }
     
-//Команды
+    //Команды
     [Rules(typeof(CreateCarValidator))]
     public record CreateCar(CarId Id, string Name) : ICommand<CarId>;
 
     public record RenameCar(CarId Id, string NewName) : ICommand<CarId>;
 
-//Бизнес-правила
+    //Бизнес-правила
     public class CreateCarValidator : Rules<CreateCar>
     {
         public CreateCarValidator() {
@@ -36,11 +34,11 @@ namespace Demo
         }
     }
 
-//События
+    //События
     public record CarCreated(CarId Id, string Name) : IAggregateEvent<CarId>;
     public record CarRenamed(CarId Id, string NewName, string OldName) : IAggregateEvent<CarId>;
 
-//Интерфейс агрегата
+    //Интерфейс агрегата
     public interface ICar : IAggregate<CarId>,
         ICanDo<CreateCar, CarId>,
         ICanDo<RenameCar, CarId>
@@ -48,17 +46,5 @@ namespace Demo
         public Task<CommandResult> RenameCar(string newName) 
             => Do(new RenameCar(this.GetId<CarId>() , newName));
     }
-//Расширение для агрегата
-    public static class CarExtension
-    {
-        public static ICar GetCar(this IGrainFactory platform, CarId id) 
-            => platform.GetGrain<ICar>(id.ToString());
-        public static async Task<ICar> CreateCar(this IGrainFactory platform, CarId id, string newName)
-        {
-            var car = platform.GetCar(id);
-            var result = await car.Do(new CreateCar(id, newName));
-            if (!result.IsSuccess) throw new Exception(result.Error);
-            return car;
-        }
-    }
+
 }

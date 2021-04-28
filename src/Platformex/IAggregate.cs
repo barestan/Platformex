@@ -2,7 +2,11 @@
 
 namespace Platformex
 {
-    public interface IAggregate<out T> : IGrainWithStringKey where T : Identity<T>
+    public interface IAggregate : IGrainWithStringKey
+    {
+    }
+
+    public interface IAggregate<out T> : IAggregate where T : Identity<T>
     {
     }
 }
