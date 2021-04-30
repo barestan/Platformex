@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Orleans;
 using Orleans.ApplicationParts;
 using Orleans.Hosting;
+using Platformex.Domain;
 
 namespace Platformex.Infrastructure
 {
@@ -21,6 +23,15 @@ namespace Platformex.Infrastructure
                 {
                     manager.AddApplicationPart(new AssemblyPart(asm));
                 });
+            }
+            foreach (var data in platform.Definitions.Aggregates.Values)
+            {
+                var stateImpl = data.StateType;
+                var stateInterface = stateImpl.GetInterfaces()
+                    .FirstOrDefault(i => !i.IsGenericType && i.GetInterfaces()
+                        .Any(j => j.IsGenericType && j.GetGenericTypeDefinition() == typeof(IAggregateState<>)));
+                if (stateInterface != null)
+                    builder.ConfigureServices(s => s.AddTransient(stateInterface,stateImpl));
             }
 
             builder.ConfigureServices(collection =>

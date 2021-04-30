@@ -12,7 +12,6 @@ namespace Demo.Application.Sagas
         public async Task HandleAsync(IDomainEvent<DocumentId, DocumentCreated> domainEvent)
         {
             await Domain.CreateCar(CarId.New, domainEvent.AggregateEvent.Name);
-            //return domainEvent.AggregateEvent.Id.Value;
         }
     }
 }

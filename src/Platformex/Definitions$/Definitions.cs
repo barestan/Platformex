@@ -19,19 +19,19 @@ namespace Platformex
 
     public sealed class Definitions
     {
-        private readonly Dictionary<Type, AggregateDefinition>
-            _aggregateDefinitions = new();
+        public readonly Dictionary<Type, AggregateDefinition>
+            Aggregates = new();
         public AggregateDefinition Aggregate<TIdentity>() where TIdentity : Identity<TIdentity> 
-            => _aggregateDefinitions[typeof(TIdentity)];
+            => Aggregates[typeof(TIdentity)];
         private readonly List<Assembly> _applicationPartsAssemlies = new();
 
         public void Register(AggregateDefinition definition)
         {
-            _aggregateDefinitions.Add(definition.IdentityType, definition);
+            Aggregates.Add(definition.IdentityType, definition);
         }
 
         public IEnumerable<Assembly> Assemblies =>
-            _aggregateDefinitions.Values.SelectMany(i => new []
+            Aggregates.Values.SelectMany(i => new []
             {
                 i.AggreagteType.Assembly,
                 i.IdentityType.Assembly,

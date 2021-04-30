@@ -41,8 +41,10 @@ namespace Platformex.Domain
                     throw new Exception($"Definitions on aggregate {typeof(TIdentity).Name} not found");
 
                 Logger.LogInformation($"Aggregate [{GetPrettyName()}] state loading...");
-                State = (TState) Activator.CreateInstance(stateType);
+
+                State = this.ServiceProvider.GetService<TState>() ?? Activator.CreateInstance<TState>();
                 await State.LoadState(this.GetId<TIdentity>());
+
                 Logger.LogInformation($"Aggregate [{GetPrettyName()}] state loaded.");
 
                 await base.OnActivateAsync();

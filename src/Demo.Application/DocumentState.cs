@@ -1,4 +1,5 @@
-﻿using Demo.Documents.Domain;
+﻿using System.Threading.Tasks;
+using Demo.Documents.Domain;
 using Platformex.Application;
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -20,7 +21,11 @@ namespace Demo.Application
             => Name = e.Name;
         public void Apply(DocumentRenamed e)
             => Name = e.NewName;
-        
+
+        protected override Task LoadStateInternal(DocumentId id)
+        {
+            return Task.CompletedTask;
+        }
     }
 
     public class DocumentDataModel    
